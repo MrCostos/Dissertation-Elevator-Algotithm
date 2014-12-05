@@ -1,8 +1,5 @@
 import java.util.*;
-/**
- * @author nitin
- * 
- */
+
 class Elevator 
 {
 	private int elevatorNumber;					//unique for every elevator

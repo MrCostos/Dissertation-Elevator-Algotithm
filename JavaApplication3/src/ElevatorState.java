@@ -1,8 +1,4 @@
-/**
- * @author nitin
- *
- * @brief : enum for different states of the elevator.
- */
+
 enum ElevatorState
 {
 	stationary,				

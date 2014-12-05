@@ -1,10 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author nitin
- * @brief : Event when persons, who have waited for their maxWaitingTime, give and leave
- */
 class PersonsGiveUpAndLeave extends Event
 {
 

@@ -1,5 +1,4 @@
 /**
- * @author nitin
  * @brief : Statistics of all the persons arrived, all those who gave up, and totalWaitingTime of others
  */
 class Statistics

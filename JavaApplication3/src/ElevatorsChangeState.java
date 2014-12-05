@@ -1,11 +1,5 @@
 import java.util.List;
 
-
-/**
- * @author nitin
- * @brief : Event will execute in every time unit, and change 
- * the states of all the elevators in that time unit.
- */
 class ElevatorsChangeState extends Event
 {
 	

@@ -1,7 +1,4 @@
-/**
- * @author nitin
- * 
- */
+
 class Person
 {
 	private int personNo; 					//unique number to identify the persons created in simulation

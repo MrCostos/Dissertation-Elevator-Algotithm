@@ -1,9 +1,5 @@
 import java.util.*;
 
-/**
- * @author nitin
- * 
- */
 class Floor
 {
 	private int floorNo;
