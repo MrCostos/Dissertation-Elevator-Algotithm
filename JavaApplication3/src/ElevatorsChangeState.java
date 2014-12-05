@@ -208,8 +208,9 @@ class ElevatorsChangeState extends Event
 				}
 			}
 		}
-
+                
 		//in the end, if there is no one inside elevator, it will stop.
+                //Need to chanage this code to implement the best stationary poisition for the lift. 
 		if (elevator.getPushedButtons().isEmpty())
 		{
 			elevator.setElevatorState(ElevatorState.stationary);
