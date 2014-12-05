@@ -1,7 +1,3 @@
-/**
- * @author nitin
- * @brief : Event when a person arrives at a floor to get an elevator
- */
 class PersonArrives extends Event
 {
 	private Person person;

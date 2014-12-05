@@ -1,6 +1,5 @@
 import java.util.*;
 
-//is this working 
 class Simulation
 {
 	
@@ -10,6 +9,7 @@ class Simulation
 	int numberOfElevators ;
 	int totalTime;					//time for which simulation will run
 	static int AmountOfPeople;              //states how many people are to be using the lifts over a certain time frame
+        static int floorDist;                   //states the distance between each floor; helps to calculate any physics nesscary
         int peopleTraffic;
 
         int amountOfPeopleLeft;                  //used to check if the another person in the simlulation can be added
@@ -26,7 +26,7 @@ class Simulation
 	 * @param numberOfElevators
 	 * @param totalTime
 	 */
-	public Simulation(int numberOfFloors, int numberOfElevators, int totalTime, int AmountOfPeople, int peopleTraffic)
+	public Simulation(int numberOfFloors, int numberOfElevators, int totalTime, int AmountOfPeople, int peopleTraffic, int floorDist)
 	{
 		super();
 		this.numberOfFloors = numberOfFloors;
@@ -34,6 +34,7 @@ class Simulation
 		this.totalTime = totalTime;
                 this.AmountOfPeople = AmountOfPeople;
                 this.peopleTraffic = peopleTraffic; 
+                this.floorDist = floorDist; 
                 
 	}
 
@@ -380,8 +381,11 @@ class Simulation
                 
                 System.out.println("Please 1 for peak morning traffic, 2 for peak afternoon traffic, 3 for random traffic");
                 int peopleTraffic = scanner.nextInt();
+                
+                System.out.println("Please state the distance in meters between each floor");
+                int floorDist = scanner.nextInt();
 		
-		Simulation simulation = new Simulation(floors,elevators,timeForSimulation, AmountOfPeople, peopleTraffic);
+		Simulation simulation = new Simulation(floors,elevators,timeForSimulation, AmountOfPeople, peopleTraffic, floorDist);
 		simulation.simulate();
 	}
 	
