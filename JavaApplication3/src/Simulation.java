@@ -127,6 +127,27 @@ class Simulation
 	}
 
         //Event Returns null if the the stated amount of people is surpassed
+        //lamda being the amount of peopel 
+        //x being the time interval 
+        private double poissonDist (int time, int people){
+            double dist;
+            double number1 = Math.pow(Math.E, - people);
+            double number2 = people ^ time;
+            //caluclating factorial 
+            int factorial = 0 ; 
+//            if (time == 0){
+//                factorial = 1;
+//            } else {
+                for (int i = 0 ; i < time; i++){ 
+                    factorial *= i;
+                }
+//            }
+            
+                dist = (number1 * number2) /factorial;
+            
+            return dist;
+        }
+        
 	private Event generatePerson()
 	{
             //Checks if the simulated number of people have been done, if not creates a person, else returns a null value. 
@@ -134,10 +155,11 @@ class Simulation
                 
                 Random randomNumber = new Random();
                 //Peak Traffic start traffic
+                //Please refer to the appendix in the report to see minutes of discussing how to generate people ******************
                 if (peopleTraffic == 1){
                     
                     //*************TODO: Need to insert posisson distributioon at this point*****************
-                    
+                                
                     Event newEvent = new PersonArrives();
                     Person person = new Person();
                     Floor floor = new Floor();
