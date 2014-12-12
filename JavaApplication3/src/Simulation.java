@@ -156,10 +156,17 @@ class Simulation
                 Random randomNumber = new Random();
                 //Peak Traffic start traffic
                 //Please refer to the appendix in the report to see minutes of discussing how to generate people ******************
+                double poiDist = poissonDist(totalTime, AmountOfPeople);
+                
                 if (peopleTraffic == 1){
                     
-                    //*************TODO: Need to insert posisson distributioon at this point*****************
-                                
+                    //Code needs to be tested. 
+                    int peopleToTurnUp = (int) (poiDist * AmountOfPeople);
+                    
+                    double peopleToUseLift = (randomNumber.nextDouble() * AmountOfPeople) * (peopleToTurnUp/2) ;
+                    
+                    //*********** TODO: need to implement how many people need to use the elevator to have a set number of users. ***********************
+                    
                     Event newEvent = new PersonArrives();
                     Person person = new Person();
                     Floor floor = new Floor();
