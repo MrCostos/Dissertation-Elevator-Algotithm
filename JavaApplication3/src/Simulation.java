@@ -150,120 +150,53 @@ class Simulation
         
 	private Event generatePerson()
 	{
-            //Checks if the simulated number of people have been done, if not creates a person, else returns a null value. 
-            if (Simulation.AmountOfPeople <= amountOfPeopleLeft) {
-                
-                Random randomNumber = new Random();
-                //Peak Traffic start traffic
-                //Please refer to the appendix in the report to see minutes of discussing how to generate people ******************
-                double poiDist = poissonDist(totalTime, AmountOfPeople);
-                
-                if (peopleTraffic == 1){
-                    
-                    //Code needs to be tested. 
-                    int peopleToTurnUp = (int) (poiDist * AmountOfPeople);
-                    
-                    double peopleToUseLift = (randomNumber.nextDouble() * AmountOfPeople) * (peopleToTurnUp/2) ;
-                    
-                    //*********** TODO: need to implement how many people need to use the elevator to have a set number of users. ***********************
-                    
-                    Event newEvent = new PersonArrives();
-                    Person person = new Person();
-                    Floor floor = new Floor();
-                    
-                    int startFloor = 0;
-                    int endFloor = randomNumber.nextInt((this.numberOfFloors+1));
-                    
-                    //this may need to change -> possible research needed 
-                    int minLimit = this.numberOfFloors*3;
-                    int maxLimit = this.numberOfFloors*5;
-                    
-                    int randomWaitingTime = randomNumber.nextInt(maxLimit - minLimit + 1) + minLimit;
-                    
-                    person.setSourceFloorNo(startFloor);
-                    person.setDestinationFloorNo(endFloor);
-                    person.setMaxWaitingTime(randomWaitingTime);
-                    person.setTimePastInWaiting(0);
-
-                    floor = floorList.get(startFloor);
-
-                    ((PersonArrives) newEvent).setFloor(floor);
-                    ((PersonArrives) newEvent).setPerson(person);
-
-                    return newEvent;
-                    
-                }
-                
-                //peak end traffic 
-                if (peopleTraffic == 2){
-                    //*************TODO: Need to insert posisson distributioon at this point*****************
-                    
-                    Event newEvent = new PersonArrives();
-                    Person person = new Person();
-                    Floor floor = new Floor();
-                    
-                    int startFloor = randomNumber.nextInt((this.numberOfFloors+1));
-                    int endFloor = 0;
-                    
-                    //this may need to change -> possible research needed 
-                    int minLimit = this.numberOfFloors*3;
-                    int maxLimit = this.numberOfFloors*5;
-                    
-                    int randomWaitingTime = randomNumber.nextInt(maxLimit - minLimit + 1) + minLimit;
-                    
-                    person.setSourceFloorNo(startFloor);
-                    person.setDestinationFloorNo(endFloor);
-                    person.setMaxWaitingTime(randomWaitingTime);
-                    person.setTimePastInWaiting(0);
-
-                    floor = floorList.get(startFloor);
-
-                    ((PersonArrives) newEvent).setFloor(floor);
-                    ((PersonArrives) newEvent).setPerson(person);
-
-                    return newEvent;
-                }
-                
-                //random traffic
-                if (peopleTraffic == 3){
-                    
-                    //*************TODO: Need to insert posisson distributioon at this point*****************
-                    
-                    Event newEvent = new PersonArrives();
-                    Person person = new Person();
-                    Floor floor = new Floor();
-                    
-                    int startFloor = randomNumber.nextInt((this.numberOfFloors));
-                    int endFloor = randomNumber.nextInt((this.numberOfFloors));
-                    
-                    //prevents start floor and end floor from being the same. 
-                    while (startFloor == endFloor){
-                        endFloor = randomNumber.nextInt((this.numberOfFloors));
-                    }
-                    
-                    //this may need to change -> possible research needed 
-                    int minLimit = this.numberOfFloors*3;
-                    int maxLimit = this.numberOfFloors*5;
-                    
-                    int randomWaitingTime = randomNumber.nextInt(maxLimit - minLimit + 1) + minLimit;
-                    
-                    person.setSourceFloorNo(startFloor);
-                    person.setDestinationFloorNo(endFloor);
-                    person.setMaxWaitingTime(randomWaitingTime);
-                    person.setTimePastInWaiting(0);
-
-                    floor = floorList.get(startFloor);
-
-                    ((PersonArrives) newEvent).setFloor(floor);
-                    ((PersonArrives) newEvent).setPerson(person);
-
-                    return newEvent;
-                    
-                }
-                amountOfPeopleLeft++;
-            } 
+            //using poissons distribution
             
-            return null;
+            //please see for random number generator https://docs.oracle.com/javase/7/docs/api/java/util/Random.html
+		Random generator = new Random();
+		double randomNumber = generator.nextDouble();
+                //System.out.println(randomNumber);
+		//the probability of returning null is 0.5
+		if (randomNumber > 0.5)
+		{
+			return null;
+		}
+
+		
+		Event newEvent = new PersonArrives();
+		Person person = new Person();
+		Floor floor = new Floor();
+
+		/*
+		 * randomly generate source and destination floor of the person but 
+		 * ensure that both are different
+		 */
+		int sourceFloorNo = generator.nextInt(numberOfFloors);
+		int destinationFloorNo = generator.nextInt(numberOfFloors);
+		//Checks if the source and desitination are the same, otherwise assigns a new random number 
+                while (sourceFloorNo == destinationFloorNo)
+		{
+			destinationFloorNo = generator.nextInt(numberOfFloors);
+		}
+
+		
+		// for a person the maxWaitingTime can be in the range numberOfFloors*3 to numberOfFloors*5
+		int minLimit = this.numberOfFloors*3;
+		int maxLimit = this.numberOfFloors*5;
+		int maxWaitingTime = generator.nextInt(maxLimit - minLimit + 1) + minLimit;
+
+		
+		person.setSourceFloorNo(sourceFloorNo);
+		person.setDestinationFloorNo(destinationFloorNo);
+		person.setMaxWaitingTime(maxWaitingTime);
+		person.setTimePastInWaiting(0);
+
+		floor = floorList.get(sourceFloorNo);
+
+		((PersonArrives) newEvent).setFloor(floor);
+		((PersonArrives) newEvent).setPerson(person);
+
+		return newEvent;
 	}
             
             
@@ -370,6 +303,7 @@ class Simulation
 				
 				Event elevatorNextChange = new ElevatorsChangeState(elevatorList, floorList, statistics, numberOfFloors, numberOfElevators);
 				eventsQueue.addFirst(elevatorNextChange);
+                                if (amountOfPeopleLeft != 0){
 				Event event = generatePerson();
 				if (event != null)
 				{
@@ -378,6 +312,17 @@ class Simulation
 				}
 				Event personsGiveUp = new PersonsGiveUpAndLeave(floorList, statistics);
 				eventsQueue.addFirst(personsGiveUp);
+                                amountOfPeopleLeft = amountOfPeopleLeft - 1;
+                                } else {
+                                    Event event = null;
+                                if (event != null)
+				{
+					eventsQueue.addFirst(event);
+					statistics.setNoOfPersons(statistics.getNoOfPersons() + 1);
+				}
+				Event personsGiveUp = new PersonsGiveUpAndLeave(floorList, statistics);
+				eventsQueue.addFirst(personsGiveUp);
+                                }
 			}
 		}
 		
@@ -415,8 +360,143 @@ class Simulation
                 int floorDist = scanner.nextInt();
 		
 		Simulation simulation = new Simulation(floors,elevators,timeForSimulation, AmountOfPeople, peopleTraffic, floorDist);
-		simulation.simulate();
+                simulation.peopleToUseElevator();
+		//simulation.simulate();
 	}
+        
+        public  void peopleToUseElevator(){
+            Random randomNumber = new Random();
+                //Peak Traffic start traffic
+                //Please refer to the appendix in the report to see minutes of discussing how to generate people ******************
+                double poiDist = poissonDist(totalTime, AmountOfPeople);
+                
+                if (peopleTraffic == 1){
+                    
+                    //Code needs to be tested. 
+                    int peopleToTurnUp = (int) (poiDist * AmountOfPeople);
+                    
+                    double peopleToUseLift = (randomNumber.nextDouble() * AmountOfPeople) * (peopleToTurnUp/2) ;
+                    
+                    System.out.println("" + peopleToUseLift);           
+                    
+        }
+        }
+                
+                
 	
 
 }
+//
+//if (Simulation.AmountOfPeople <= amountOfPeopleLeft) {
+//                
+//                Random randomNumber = new Random();
+//                //Peak Traffic start traffic
+//                //Please refer to the appendix in the report to see minutes of discussing how to generate people ******************
+//                double poiDist = poissonDist(totalTime, AmountOfPeople);
+//                
+//                if (peopleTraffic == 1){
+//                    
+//                    //Code needs to be tested. 
+//                    int peopleToTurnUp = (int) (poiDist * AmountOfPeople);
+//                    
+//                    double peopleToUseLift = (randomNumber.nextDouble() * AmountOfPeople) * (peopleToTurnUp/2) ;
+//                    
+//                    //*********** TODO: need to implement how many people need to use the elevator to have a set number of users. ***********************
+//                    
+//                    Event newEvent = new PersonArrives();
+//                    Person person = new Person();
+//                    Floor floor = new Floor();
+//                    
+//                    int startFloor = 0;
+//                    int endFloor = randomNumber.nextInt((this.numberOfFloors+1));
+//                    
+//                    //this may need to change -> possible research needed 
+//                    int minLimit = this.numberOfFloors*3;
+//                    int maxLimit = this.numberOfFloors*5;
+//                    
+//                    int randomWaitingTime = randomNumber.nextInt(maxLimit - minLimit + 1) + minLimit;
+//                    
+//                    person.setSourceFloorNo(startFloor);
+//                    person.setDestinationFloorNo(endFloor);
+//                    person.setMaxWaitingTime(randomWaitingTime);
+//                    person.setTimePastInWaiting(0);
+//
+//                    floor = floorList.get(startFloor);
+//
+//                    ((PersonArrives) newEvent).setFloor(floor);
+//                    ((PersonArrives) newEvent).setPerson(person);
+//
+//                    return newEvent;
+//                    
+//                }
+//                
+//                //peak end traffic 
+//                if (peopleTraffic == 2){
+//                    //*************TODO: Need to insert posisson distributioon at this point*****************
+//                    
+//                    Event newEvent = new PersonArrives();
+//                    Person person = new Person();
+//                    Floor floor = new Floor();
+//                    
+//                    int startFloor = randomNumber.nextInt((this.numberOfFloors+1));
+//                    int endFloor = 0;
+//                    
+//                    //this may need to change -> possible research needed 
+//                    int minLimit = this.numberOfFloors*3;
+//                    int maxLimit = this.numberOfFloors*5;
+//                    
+//                    int randomWaitingTime = randomNumber.nextInt(maxLimit - minLimit + 1) + minLimit;
+//                    
+//                    person.setSourceFloorNo(startFloor);
+//                    person.setDestinationFloorNo(endFloor);
+//                    person.setMaxWaitingTime(randomWaitingTime);
+//                    person.setTimePastInWaiting(0);
+//
+//                    floor = floorList.get(startFloor);
+//
+//                    ((PersonArrives) newEvent).setFloor(floor);
+//                    ((PersonArrives) newEvent).setPerson(person);
+//
+//                    return newEvent;
+//                }
+//                
+//                //random traffic
+//                if (peopleTraffic == 3){
+//                    
+//                    //*************TODO: Need to insert posisson distributioon at this point*****************
+//                    
+//                    Event newEvent = new PersonArrives();
+//                    Person person = new Person();
+//                    Floor floor = new Floor();
+//                    
+//                    int startFloor = randomNumber.nextInt((this.numberOfFloors));
+//                    int endFloor = randomNumber.nextInt((this.numberOfFloors));
+//                    
+//                    //prevents start floor and end floor from being the same. 
+//                    while (startFloor == endFloor){
+//                        endFloor = randomNumber.nextInt((this.numberOfFloors));
+//                    }
+//                    
+//                    //this may need to change -> possible research needed 
+//                    int minLimit = this.numberOfFloors*3;
+//                    int maxLimit = this.numberOfFloors*5;
+//                    
+//                    int randomWaitingTime = randomNumber.nextInt(maxLimit - minLimit + 1) + minLimit;
+//                    
+//                    person.setSourceFloorNo(startFloor);
+//                    person.setDestinationFloorNo(endFloor);
+//                    person.setMaxWaitingTime(randomWaitingTime);
+//                    person.setTimePastInWaiting(0);
+//
+//                    floor = floorList.get(startFloor);
+//
+//                    ((PersonArrives) newEvent).setFloor(floor);
+//                    ((PersonArrives) newEvent).setPerson(person);
+//
+//                    return newEvent;
+//                    
+//                }
+//                amountOfPeopleLeft++;
+//            } 
+//            
+//            return null;
