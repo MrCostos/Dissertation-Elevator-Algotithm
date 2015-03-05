@@ -146,57 +146,66 @@ class Simulation
                 dist = (number1 * number2) /factorial;
             
             return dist;
+            
+//            double dist;
+//            double number1 = Math.pow(Math.E, - people);
+//            double number2 = people ^ time;
+//            //caluclating factorial 
+//            int factorial = 0 ; 
+////            if (time == 0){
+////                factorial = 1;
+////            } else {
+//                for (int i = 0 ; i < time; i++){ 
+//                    factorial *= i;
+//                }
+////            }
+//            
+//                dist = (number1 * number2) /factorial;
+//            
+//            return dist;
         }
         
 	private Event generatePerson()
 	{
-            //using poissons distribution
-            
-            //please see for random number generator https://docs.oracle.com/javase/7/docs/api/java/util/Random.html
-		Random generator = new Random();
-		double randomNumber = generator.nextDouble();
-                //System.out.println(randomNumber);
-		//the probability of returning null is 0.5
-		if (randomNumber > 0.5)
-		{
-			return null;
-		}
+                Random randomNumber = new Random();
+                //Peak Traffic start traffic
+                //Please refer to the appendix in the report to see minutes of discussing how to generate people ******************
+                double poiDist = poissonDist(totalTime, AmountOfPeople);
+                
+                                   
+                    //Code needs to be tested. 
+                System.out.println("poisson distribution: " + poiDist);
+                    int peopleToTurnUp = (int) (poiDist * AmountOfPeople);
+                    System.out.println("People to turn up: " + peopleToTurnUp);
+                    double peopleToUseLift = (randomNumber.nextDouble() * AmountOfPeople) * (peopleToTurnUp/2) ;
+                    AmountOfPeople = ((int)Math.round(peopleToUseLift) * 10);
+                    System.out.println("" + AmountOfPeople);
+                    //*********** TODO: need to implement how many people need to use the elevator to have a set number of users. ***********************
+                    
+                    Event newEvent = new PersonArrives();
+                    Person person = new Person();
+                    Floor floor = new Floor();
+                    
+                    int startFloor = 0;
+                    int endFloor = randomNumber.nextInt((this.numberOfFloors+1));
+                    
+                    //this may need to change -> possible research needed 
+                    int minLimit = this.numberOfFloors*3;
+                    int maxLimit = this.numberOfFloors*5;
+                    
+                    int randomWaitingTime = randomNumber.nextInt(maxLimit - minLimit + 1) + minLimit;
+                    
+                    person.setSourceFloorNo(startFloor);
+                    person.setDestinationFloorNo(endFloor);
+                    person.setMaxWaitingTime(randomWaitingTime);
+                    person.setTimePastInWaiting(0);
 
-		
-		Event newEvent = new PersonArrives();
-		Person person = new Person();
-		Floor floor = new Floor();
+                    floor = floorList.get(startFloor);
 
-		/*
-		 * randomly generate source and destination floor of the person but 
-		 * ensure that both are different
-		 */
-		int sourceFloorNo = generator.nextInt(numberOfFloors);
-		int destinationFloorNo = generator.nextInt(numberOfFloors);
-		//Checks if the source and desitination are the same, otherwise assigns a new random number 
-                while (sourceFloorNo == destinationFloorNo)
-		{
-			destinationFloorNo = generator.nextInt(numberOfFloors);
-		}
+                    ((PersonArrives) newEvent).setFloor(floor);
+                    ((PersonArrives) newEvent).setPerson(person);
 
-		
-		// for a person the maxWaitingTime can be in the range numberOfFloors*3 to numberOfFloors*5
-		int minLimit = this.numberOfFloors*3;
-		int maxLimit = this.numberOfFloors*5;
-		int maxWaitingTime = generator.nextInt(maxLimit - minLimit + 1) + minLimit;
-
-		
-		person.setSourceFloorNo(sourceFloorNo);
-		person.setDestinationFloorNo(destinationFloorNo);
-		person.setMaxWaitingTime(maxWaitingTime);
-		person.setTimePastInWaiting(0);
-
-		floor = floorList.get(sourceFloorNo);
-
-		((PersonArrives) newEvent).setFloor(floor);
-		((PersonArrives) newEvent).setPerson(person);
-
-		return newEvent;
+                    return newEvent;
 	}
             
             
@@ -257,7 +266,7 @@ class Simulation
 	{
 		int personNo = 1;
 		initialize();
-
+                
 		for (int time = 0; time < totalTime;)
 		{
 			
@@ -361,25 +370,74 @@ class Simulation
 		
 		Simulation simulation = new Simulation(floors,elevators,timeForSimulation, AmountOfPeople, peopleTraffic, floorDist);
                 simulation.peopleToUseElevator();
-		//simulation.simulate();
+		//s4imulation.simulate();
 	}
         
-        public  void peopleToUseElevator(){
-            Random randomNumber = new Random();
+        public void peopleToUseElevator(){
+
+            double answer = 0;
+            double numerator;
+
+            int looper;
+            //factorial one to not error out the for loop below
+            int factorial = 1;
+
+            for (int x = 0; x <= totalTime; x++ ){
+                //numerator
+                numerator = (AmountOfPeople^x) * (Math.exp((-1 *AmountOfPeople)));
+                
+                //
+                for ( looper = 0 ; looper <= x ; looper++ ){
+                    factorial = factorial*looper;
+                }
+                
+                answer = answer + (numerator/factorial);
+            } 
+
+            int per = (int)((Math.round(answer))*100) ;
+            System.out.println("this is teh pois dist: " + per);
+
+
+
+//Random randomNumber = new Random();
                 //Peak Traffic start traffic
                 //Please refer to the appendix in the report to see minutes of discussing how to generate people ******************
-                double poiDist = poissonDist(totalTime, AmountOfPeople);
+                //double poiDist = poissonDist(totalTime, AmountOfPeople);
                 
-                if (peopleTraffic == 1){
+                
+                //for loop to work out the factorial for poisson distribution (domnoinator)
+                
                     
+                ////Numerator  - First part of the equation
+                int firstPartOfEquation = 0;
+                int temp;
+                int looper2;
+                for (looper2 =0; looper2 < totalTime; looper2++){
+                    temp = AmountOfPeople^looper2;
+                    firstPartOfEquation = firstPartOfEquation + temp;
+                }
+                
+                System.out.println(" first part of teh equation: " + firstPartOfEquation);
+                
+                
+                
+                ////Numerator  - second part of the equation
+                double answer1 = firstPartOfEquation * (Math.exp(-1*AmountOfPeople));
+
+                double peopleToUseLift = (answer1 / factorial) * 100 ;
+                
+                //long peopleToUseLift = Math.round(AmountOfPeople * percentage); 
                     //Code needs to be tested. 
-                    int peopleToTurnUp = (int) (poiDist * AmountOfPeople);
+                   // int peopleToTurnUp = (int) (poiDist * AmountOfPeople);
                     
-                    double peopleToUseLift = (randomNumber.nextDouble() * AmountOfPeople) * (peopleToTurnUp/2) ;
                     
-                    System.out.println("" + peopleToUseLift);           
+                    //double peopleToUseLift = (randomNumber.nextDouble() * AmountOfPeople) * (peopleToTurnUp/2) ;
                     
-        }
+                    System.out.println("people to use the lift" + peopleToUseLift);           
+                    
+                    
+                    
+        
         }
                 
                 
