@@ -7,6 +7,8 @@ class Statistics
 	private int noOfPersonsGaveUp;		//total number of persons who gave up and left
 	private int totalWaitingTime;		//total waiting time of the others
         private int floorDist;
+        
+        private int time;
 
 	/**
 	 * @return noOfPersons
@@ -16,6 +18,9 @@ class Statistics
 		return noOfPersons;
 	}
 
+        public int getTime(){
+            return time;
+        }
 	/**
 	 * @return noOfPersonsGaveUp
 	 */
@@ -56,6 +61,9 @@ class Statistics
 		this.totalWaitingTime = totalWaitingTime;
 	}
 
+        public void setTime(int time){
+            this.time = time;
+        }
 	/**
 	 * @brief : initially everything is 0.
 	 */
@@ -72,6 +80,7 @@ class Statistics
 		System.out.println("Total Persons Entered : "+ noOfPersons);
 		System.out.println("Total Number of Persons who gave up : "	+ noOfPersonsGaveUp);
 		System.out.println("Total Waiting Time : "+ totalWaitingTime);
+                System.out.println("The total time that was used was " + time);
 	}
         
         //uses kinematics equation 

@@ -19,6 +19,10 @@ class Simulation
 	private LinkedList<Event> eventsQueue = new LinkedList<Event>();
 	
 	private Statistics statistics = new Statistics();		//initially everything is 0
+        
+        //variable below for testing
+        int initialVelocity = 0;
+        int Velocity = 2;
 
 	
 	/**
@@ -94,7 +98,7 @@ class Simulation
 	{
 		createFloors();
 		createElevators();
-		Event event = new ElevatorsChangeState(elevatorList, floorList, statistics, numberOfFloors, numberOfElevators);
+		Event event = new ElevatorsChangeState(elevatorList, floorList, statistics, numberOfFloors, numberOfElevators, initialVelocity, Velocity, floorDist);
 		eventsQueue.addFirst(event);
 	}
 
@@ -173,7 +177,7 @@ class Simulation
             //please see for random number generator https://docs.oracle.com/javase/7/docs/api/java/util/Random.html
 		Random generator = new Random();
 		double randomNumber = generator.nextDouble();
-                System.out.println(randomNumber);
+                //System.out.println(randomNumber);
 		//the probability of returning null is 0.5
 		if (randomNumber > 0.5)
 		{
@@ -356,11 +360,14 @@ class Simulation
 			else
 			{
 				time++;
+                                statistics.setTime(time++);
 				System.out.println();
-				System.out.println("Time : " + (time ));
+				//commented line out for testing 
+                                //System.out.println("Time : " + (time ));
+                                System.out.println("Time : " + statistics.getTime());
 				eventToExecute.happen();
 				
-				Event elevatorNextChange = new ElevatorsChangeState(elevatorList, floorList, statistics, numberOfFloors, numberOfElevators);
+				Event elevatorNextChange = new ElevatorsChangeState(elevatorList, floorList, statistics, numberOfFloors, numberOfElevators, initialVelocity, Velocity, floorDist);
 				eventsQueue.addFirst(elevatorNextChange);
 				Event event = generatePerson();
 				if (event != null)
@@ -427,10 +434,10 @@ class Simulation
                 //simulation.peopleToUseElevator();
                 
                 //using to test kinematics Equation
-                System.out.println("This is how long the lift will take" + simulation.calcTime(floorDistscanner));
+                //System.out.println("This is how long the lift will take" + simulation.calcTime(floorDistscanner));
                 
                 //If the line below is commented it will be for tetsing purposes
-		//simulation.simulate();
+		simulation.simulate();
 	}
         
         public void peopleToUseElevator(){

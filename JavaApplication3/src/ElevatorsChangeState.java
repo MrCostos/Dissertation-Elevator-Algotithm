@@ -9,6 +9,11 @@ class ElevatorsChangeState extends Event
 	private int numberOfFloors;
 	@SuppressWarnings("unused")
 	private int numberOfElevators;
+        
+        private int initialVelocity;
+        private int Velocoity;
+        private int dist;
+        
 	
 
 	/**
@@ -20,7 +25,7 @@ class ElevatorsChangeState extends Event
 	 */
 	public ElevatorsChangeState(List<Elevator> elevatorList,
 			List<Floor> floorList, Statistics statistics, int numberOfFloors,
-			int numberOfElevators)
+			int numberOfElevators, int initialVelocity, int Velocoity, int dist)
 	{
 		super();
 		this.elevatorList = elevatorList;
@@ -28,6 +33,9 @@ class ElevatorsChangeState extends Event
 		this.statistics = statistics;
 		this.numberOfFloors = numberOfFloors;
 		this.numberOfElevators = numberOfElevators;
+                this.initialVelocity = initialVelocity;
+                this.Velocoity = Velocoity;
+                this.dist = dist;
 	}
 
 
@@ -77,6 +85,10 @@ class ElevatorsChangeState extends Event
 		int currentFloorNo = floor.getFloorNo();
 		elevator.unLoadPassengers(currentFloorNo);
 		
+                //number should change but does not due to testing purposes
+                int timeTaken = statistics.getTime() + timeToDisembark();
+                statistics.setTime(timeTaken);
+                
 //		System.out.println("Passengers exit elevator number " + elevator.getElevatorNumber() +
 //				" at floor number " + currentFloorNo);
 		
@@ -89,6 +101,7 @@ class ElevatorsChangeState extends Event
 			elevator.setElevatorState(ElevatorState.waitingDown);
 		}
 		
+                
 	}
 	
 	/**
@@ -102,6 +115,11 @@ class ElevatorsChangeState extends Event
 	 */
 	private void loadOrMoveElevator(Elevator elevator, Floor floor)
 	{
+            
+            int timeTaken = statistics.getTime() + timeCalculation();
+            
+            statistics.setTime(timeTaken);
+            
 		int currentFloorNo = floor.getFloorNo();
 
 		
@@ -263,7 +281,7 @@ class ElevatorsChangeState extends Event
 			return;
 		}
 		
-		int floorsToMove = 1;
+		int floorsToMove = 1;   
 		while (currentFloorNo + floorsToMove < numberOfFloors ||
 				currentFloorNo - floorsToMove >= 0)
 		{
@@ -426,5 +444,34 @@ class ElevatorsChangeState extends Event
 		}
 		
 	}
+        
+        public int timeCalculation (){
+            /*where 
+                    t = time
+                    S= distance travelled in a given direction
+                    u = initial velocity
+                    v = current veloicty
+                    a = acceleration
+            
+            Formulae is  t=2S /(u +v)
+            
+            or t = 2(s-u)/a
+            */        
+                
+        int answer;
+        int s = dist;
+        
+        //numerator 
+        s = 2*s;
+        
+       answer = s / (initialVelocity + Velocoity);
+                
+                
+            
+            return answer;
+        }
 
+        private static int timeToDisembark (){
+            return 1;
+        }
 }
