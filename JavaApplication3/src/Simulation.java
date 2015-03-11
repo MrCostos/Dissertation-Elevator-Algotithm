@@ -425,7 +425,12 @@ class Simulation
                 
                 //using to test poisson distribution
                 //simulation.peopleToUseElevator();
-		simulation.simulate();
+                
+                //using to test kinematics Equation
+                System.out.println("This is how long the lift will take" + simulation.calcTime(floorDistscanner));
+                
+                //If the line below is commented it will be for tetsing purposes
+		//simulation.simulate();
 	}
         
         public void peopleToUseElevator(){
@@ -495,6 +500,35 @@ class Simulation
         
         }
                 
+        public int calcTime(int floorDistInput){
+            /*where 
+                    t = time
+                    S= distance travelled in a given direction
+                    u = initial velocity
+                    v = current veloicty
+                    a = acceleration
+            
+            Formulae is  t=2S /(u +v) 
+            
+            OR 
+            
+            Formulae is t = sqRoot(2S /(u+a))
+            */        
+            
+            //initial veloicty & current have been commented as variable will be passed as parameters
+            int v = 1;
+            int u = 0;
+            int s = floorDistInput;
+            int answer ;
+            
+            //numerator 
+            s = 2*s;
+            
+            answer = s / (u+v);
+            
+            
+            return answer;
+        }
                 
 	
 
