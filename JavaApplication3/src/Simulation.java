@@ -416,8 +416,8 @@ class Simulation
 		System.out.println("Enter number of elevators.");
 		int elevators = scanner.nextInt();
 		
-		System.out.println("Enter time for simulation.");
-		int timeForSimulation = scanner.nextInt();
+		System.out.println("Enter how many hours the Elevator will be used for for simulation.");
+                int timeForSimulation = calculateSeconds(scanner.nextInt());
                 
                 System.out.println("Please enter the amount of people in this time frame");
                 int AmountOfPeoplescanner = (scanner.nextInt() -1);
@@ -439,6 +439,11 @@ class Simulation
                 //If the line below is commented it will be for tetsing purposes
 		simulation.simulate();
 	}
+        
+        //converts hours into seconds 
+        private static int calculateSeconds (int timeInHours){
+            return (timeInHours*60*60);
+        }
         
         public void peopleToUseElevator(){
 

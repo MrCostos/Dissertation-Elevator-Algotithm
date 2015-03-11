@@ -255,6 +255,10 @@ class ElevatorsChangeState extends Event
         
 	private void moveElevator(Elevator elevator )
 	{
+            int timeTaken = statistics.getTime() + timeCalculation();
+            
+            statistics.setTime(timeTaken);
+            
 		int currentFloorNo = elevator.getCurrentFloorNo();
 		Floor currentFloor = floorList.get(currentFloorNo);
 		
