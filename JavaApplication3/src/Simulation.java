@@ -407,7 +407,9 @@ class Simulation
 	 */
 	public static void main (String [] args)
 	{
-		
+	
+            new GUI();
+            
 		Scanner scanner = new Scanner(System.in);
 		
 		System.out.println("Enter number of floors.");

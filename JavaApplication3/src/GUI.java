@@ -12,12 +12,12 @@ public class GUI extends JFrame
         JButton SimulateButton = new JButton("Run Simulation");
         JButton quitButton = new JButton("Exit");
         
-        JTextField NumberOfFloorsTextField = new JTextField ();
-        JTextField NumberOfElevatorsTextField = new JTextField ();
-        JTextField AmountOfPeopleField = new JTextField ();
+        JTextField NumberOfFloorsTextField = new JTextField (5);
+        JTextField NumberOfElevatorsTextField = new JTextField (5);
+        JTextField AmountOfPeopleField = new JTextField (5);
         JComboBox timeField = new JComboBox (timeText);
-        JTextField distanceField = new JTextField ();
-        JTextArea infoArea = new JTextArea(12,50);
+        JTextField distanceField = new JTextField (5);
+        JTextArea infoArea = new JTextArea(25,350);
 
     public static void main(String[] args) {
         new GUI();
@@ -25,17 +25,33 @@ public class GUI extends JFrame
     
     public GUI() {
         setLayout(new BorderLayout());
-        setSize(450, 100);
-        setTitle("Video Player");
+        setSize(1000, 500);
+        setTitle("Elevator Simulator");
 
         // close application only by clicking the quit button
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        //setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         JPanel top = new JPanel();
-        top.add(new JLabel("Select an option by clicking one of the buttons below"));
+        top.add(new JLabel("Pleae enter all the data"));
         add("North", top);
 
         JPanel bottom = new JPanel();
+        JLabel NumberOfFloorsLabel = new JLabel ("Floors");
+        bottom.add(NumberOfFloorsLabel);
+        bottom.add(NumberOfFloorsTextField); 
+        JLabel NumberOfElevatorsLabel = new JLabel ("Elevators");
+        bottom.add(NumberOfElevatorsLabel);
+        bottom.add(NumberOfElevatorsTextField); 
+        JLabel NumberOfPeoplesLabel = new JLabel ("People");
+        bottom.add(NumberOfPeoplesLabel);
+        bottom.add(AmountOfPeopleField); 
+        JLabel NumberOfTimesLabel = new JLabel ("Time in hours");
+        bottom.add(NumberOfTimesLabel);
+        bottom.add(timeField);
+        JLabel NumberODissLabel = new JLabel ("Distance between floors (m)");
+        bottom.add(NumberODissLabel);
+        bottom.add(distanceField); 
+        
         bottom.add(SimulateButton); SimulateButton.addActionListener(this);
         bottom.add(quitButton); quitButton.addActionListener(this);
         bottom.add(infoArea); 
