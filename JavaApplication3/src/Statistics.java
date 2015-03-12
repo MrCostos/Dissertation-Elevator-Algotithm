@@ -79,7 +79,7 @@ class Statistics
 	public void printStatistics()
 	{
             //information info = new information();
-            returnText = "  Total Persons Entered : " + noOfPersons + "\n Total Number of Persons who gave up : "+ noOfPersonsGaveUp + "\n Total Waiting Time : "+ totalWaitingTime + "\n The total time that was used was " + time;
+            returnText = "Total Persons Entered : " + noOfPersons + "\n Total Number of Persons who gave up : "+ noOfPersonsGaveUp + "\n Total Waiting Time : "+ totalWaitingTime + "\n The total amount of minutes used was  :" + (time/60);
 //            return returnText;
             System.out.println("" + returnText);
             //info.setFinalStats(returnText);
