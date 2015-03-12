@@ -18,8 +18,9 @@ public class GUI extends JFrame
         JTextField AmountOfPeopleField = new JTextField (5);
         JComboBox timeField = new JComboBox (timeText);
         JTextField distanceField = new JTextField (5);
-        JTextArea infoArea = new JTextArea(25,25);
-
+        JTextArea StatsTextArea = new JTextArea(25,25);
+        JTextArea ElevatorMoving = new JTextArea(10, 10);
+        JTextArea ElevatorMoving2 = new JTextArea(10, 10);
         //testing
         int[] valuesSim = new int [5];
         
@@ -70,7 +71,7 @@ public class GUI extends JFrame
         
         bottom.add(SimulateButton); SimulateButton.addActionListener(this);
         bottom.add(quitButton); quitButton.addActionListener(this);
-        bottom.add(infoArea); 
+        bottom.add(StatsTextArea); 
         add("South", bottom);
 
         setResizable(true);
@@ -100,9 +101,16 @@ public class GUI extends JFrame
                 
                 //If the line below is commented it will be for tetsing purposes
 		simulation.simulate();
-                AppendText();
+                //simulation.peopleToUseElevator();
+                //AppendText();
+                StatsTextArea.setText(Statistics.returnText);
+                        
             
-        }        
+        }
+        
+        if (e.getSource() == quitButton){
+            System.exit(0);
+        }
     }
     
     public void AppendText(){

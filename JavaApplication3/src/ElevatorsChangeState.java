@@ -14,7 +14,7 @@ class ElevatorsChangeState extends Event
         private int Velocoity;
         private int dist;
         
-	
+	public static String elevatorMoving;
 
 	/**
 	 * @param elevatorList
@@ -368,6 +368,7 @@ class ElevatorsChangeState extends Event
 		if (elevator.getElevatorState() == ElevatorState.movingUp)
 		{
 			currentFloorNo = elevator.getCurrentFloorNo() + 1;
+                        elevatorMoving = "Elevator No. "+ elevator.getElevatorNumber() + " moves to " + currentFloorNo;
 			System.out.println("Elevator No. "+ elevator.getElevatorNumber() + " moves to " + currentFloorNo);
 			elevator.setCurrentFloorNo(currentFloorNo);
 			floor = floorList.get(currentFloorNo);
@@ -395,7 +396,8 @@ class ElevatorsChangeState extends Event
 		else if (elevator.getElevatorState() == ElevatorState.movingDown)
 		{
 			currentFloorNo = elevator.getCurrentFloorNo() - 1;
-			System.out.println("Elevator No. "+ elevator.getElevatorNumber() + " moves to " + currentFloorNo);
+			elevatorMoving = "Elevator No. "+ elevator.getElevatorNumber() + " moves to " + currentFloorNo;
+                        System.out.println("Elevator No. "+ elevator.getElevatorNumber() + " moves to " + currentFloorNo);
 			elevator.setCurrentFloorNo(currentFloorNo);
 			floor = floorList.get(currentFloorNo);
 
