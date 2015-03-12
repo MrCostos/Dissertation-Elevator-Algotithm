@@ -131,7 +131,7 @@ class Simulation
 	}
 
         //Event Returns null if the the stated amount of people is surpassed
-        //lamda being the amount of peopel 
+        //lamda being the amount of people 
         //x being the time interval 
         private double poissonDist (int time, int people){
             double dist;
@@ -395,7 +395,7 @@ class Simulation
 		System.out.println();
 		System.out.println("Final statistics : ");
 		statistics.printStatistics();
-		
+                
 	}
         
         public static void stats (){
@@ -405,7 +405,7 @@ class Simulation
 	/**
 	 * @param args : numberOfFloors, numberOfElevators, timeForSimulation
 	 */
-	public static void main (String [] args)
+	/*public static void main (String [] args)
 	{
 	
             new GUI();
@@ -421,7 +421,7 @@ class Simulation
 		System.out.println("Enter how many hours the Elevator will be used for for simulation.");
                 int timeForSimulation = calculateSeconds(scanner.nextInt());
                 
-                System.out.println("Please enter the amount of people in this time frame");
+                System.out.println("Please enter the amount of people to be in the building within this time frame");
                 int AmountOfPeoplescanner = (scanner.nextInt() -1);
                 
                 System.out.println("Please 1 for peak morning traffic, 2 for peak afternoon traffic, 3 for random traffic");
@@ -440,7 +440,7 @@ class Simulation
                 
                 //If the line below is commented it will be for tetsing purposes
 		simulation.simulate();
-	}
+	}*/
         
         //converts hours into seconds 
         private static int calculateSeconds (int timeInHours){
@@ -468,49 +468,53 @@ class Simulation
                 answer = answer + (numerator/factorial);
             } 
 
+            //answer poisson distribution as a percentage
             int per = (int)((Math.round(answer))*100) ;
-            System.out.println("this is teh pois dist: " + per);
+            System.out.println("this is the pois dist: " + per);
+            
+            double usersToUseTheLift = per * AmountOfPeople;
+            
+            System.out.println("People to use the lift" + usersToUseTheLift);
 
-
-
-//Random randomNumber = new Random();
-                //Peak Traffic start traffic
-                //Please refer to the appendix in the report to see minutes of discussing how to generate people ******************
-                //double poiDist = poissonDist(totalTime, AmountOfPeople);
-                
-                
-                //for loop to work out the factorial for poisson distribution (domnoinator)
-                
-                    
-                ////Numerator  - First part of the equation
-                int firstPartOfEquation = 0;
-                int temp;
-                int looper2;
-                for (looper2 =0; looper2 < totalTime; looper2++){
-                    temp = AmountOfPeople^looper2;
-                    firstPartOfEquation = firstPartOfEquation + temp;
-                }
-                
-                System.out.println(" first part of teh equation: " + firstPartOfEquation);
-                
-                
-                
-                ////Numerator  - second part of the equation
-                double answer1 = firstPartOfEquation * (Math.exp(-1*AmountOfPeople));
-
-                double peopleToUseLift = (answer1 / factorial) * 100 ;
-                
-                //long peopleToUseLift = Math.round(AmountOfPeople * percentage); 
-                    //Code needs to be tested. 
-                   // int peopleToTurnUp = (int) (poiDist * AmountOfPeople);
-                    
-                    
-                    //double peopleToUseLift = (randomNumber.nextDouble() * AmountOfPeople) * (peopleToTurnUp/2) ;
-                    
-                    System.out.println("people to use the lift" + peopleToUseLift);           
-                    
-                    
-                    
+//
+//            //Random randomNumber = new Random();
+//                //Peak Traffic start traffic
+//                //Please refer to the appendix in the report to see minutes of discussing how to generate people ******************
+//                //double poiDist = poissonDist(totalTime, AmountOfPeople);
+//                
+//                
+//                //for loop to work out the factorial for poisson distribution (domnoinator)
+//                
+//                    
+//                ////Numerator  - First part of the equation
+//                int firstPartOfEquation = 0;
+//                int temp;
+//                int looper2;
+//                for (looper2 =0; looper2 < totalTime; looper2++){
+//                    temp = AmountOfPeople^looper2;
+//                    firstPartOfEquation = firstPartOfEquation + temp;
+//                }
+//                
+//                System.out.println(" first part of the equation: " + firstPartOfEquation);
+//                
+//                
+//                
+//                ////Numerator  - second part of the equation
+//                double answer1 = firstPartOfEquation * (Math.exp(-1*AmountOfPeople));
+//
+//                double peopleToUseLift = (answer1 / factorial) * 100 ;
+//                
+//                //long peopleToUseLift = Math.round(AmountOfPeople * percentage); 
+//                    //Code needs to be tested. 
+//                   // int peopleToTurnUp = (int) (poiDist * AmountOfPeople);
+//                    
+//                    
+//                    //double peopleToUseLift = (randomNumber.nextDouble() * AmountOfPeople) * (peopleToTurnUp/2) ;
+//                    
+//                    System.out.println("people to use the lift" + peopleToUseLift);           
+//                    
+//                    
+//                    
         
         }
                 

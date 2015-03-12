@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Constructor;
 import javax.swing.*;
 
 public class GUI extends JFrame
@@ -17,9 +18,24 @@ public class GUI extends JFrame
         JTextField AmountOfPeopleField = new JTextField (5);
         JComboBox timeField = new JComboBox (timeText);
         JTextField distanceField = new JTextField (5);
-        JTextArea infoArea = new JTextArea(25,350);
+        JTextArea infoArea = new JTextArea(25,25);
 
+        //testing
+        int[] valuesSim = new int [5];
+        
+        String EndStats;
+        
+    public void setEndStats (String stats){
+        this.EndStats = stats;
+    }
+    
+    public String getEndStats(){
+        return EndStats;
+    }
+    information info = new information ();
     public static void main(String[] args) {
+    
+        
         new GUI();
     }
     
@@ -57,11 +73,42 @@ public class GUI extends JFrame
         bottom.add(infoArea); 
         add("South", bottom);
 
-        setResizable(false);
+        setResizable(true);
         setVisible(true);
     }
 
+    //time conversion from hours to seconds
+    private int TimeConversion(int Hours){
+        int time = (Hours +1) *60*60;
+        return time;
+    }
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Action performed!");
+        if (e.getSource() == SimulateButton) {
+	
+            int time = TimeConversion(timeField.getSelectedIndex());
+        
+                //will be used for different scenrios
+                int peopleTraffic = 1;
+                		
+		Simulation simulation = new Simulation(Integer.parseInt(NumberOfFloorsTextField.getText()),Integer.parseInt(NumberOfElevatorsTextField.getText()),time, Integer.parseInt(AmountOfPeopleField.getText()), peopleTraffic, Integer.parseInt(distanceField.getText()));
+                
+                //using to test poisson distribution
+                //simulation.peopleToUseElevator();
+                
+                //using to test kinematics Equation
+                //System.out.println("This is how long the lift will take" + simulation.calcTime(floorDistscanner));
+                
+                //If the line below is commented it will be for tetsing purposes
+		simulation.simulate();
+                AppendText();
+            
+        }        
+    }
+    
+    public void AppendText(){
+       // infoArea.setText("hello");
+        System.out.println("" + info.getFinalStats());
+        
+        
     }
 }

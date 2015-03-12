@@ -77,10 +77,17 @@ class Statistics
 	
 	public void printStatistics()
 	{
-		System.out.println("Total Persons Entered : "+ noOfPersons);
-		System.out.println("Total Number of Persons who gave up : "	+ noOfPersonsGaveUp);
-		System.out.println("Total Waiting Time : "+ totalWaitingTime);
-                System.out.println("The total time that was used was " + time);
+            //information info = new information();
+            String returnText = "  Total Persons Entered : " + noOfPersons + "\n Total Number of Persons who gave up : "+ noOfPersonsGaveUp + "\n Total Waiting Time : "+ totalWaitingTime + "\n The total time that was used was " + time;
+//            return returnText;
+            System.out.println("" + returnText);
+            //info.setFinalStats(returnText);
+            //System.out.println("" + info.getFinalStats());
+//            info.setinfo(info.getInfo() + returnText);
+//		System.out.println("Total Persons Entered : "+ noOfPersons);
+//		System.out.println("Total Number of Persons who gave up : "	+ noOfPersonsGaveUp);
+//		System.out.println("Total Waiting Time : "+ totalWaitingTime);
+//                System.out.println("The total time that was used was " + time);
 	}
         
         //uses kinematics equation 
