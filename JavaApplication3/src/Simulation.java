@@ -522,11 +522,12 @@ class Simulation
 
         //public for testing purposes
         public void CalculatePoissonDistribution(){
-            int amountOfPeople = 5000;
+            double amountOfPeople = 745;
             int timeInSeconds = 3 * 60 * 60; // 3hours in seconds 
             //double answer = 0;
             int factorial = 1;
             BigInteger fact = BigInteger.valueOf(factorial);
+            double numeratorToBeConverted;
             BigDecimal numerator; 
             BigInteger tempanswer;
             BigInteger answer = null;
@@ -534,24 +535,28 @@ class Simulation
             int percentage = 100;
             BigInteger ConvertTopercentage = BigInteger.valueOf(percentage);
             
- //           for (int i = 0; i <= amountOfPeople; i++){
+            System.out.println(Math.exp(-amountOfPeople));
+            
+            for (int i = 0; i <= amountOfPeople; i++){
                 tempanswer = null;
                 //calculating factorial 
                 //reference http://stackoverflow.com/questions/11446973/find-factorial-of-large-numbers-in-java
-                for (int f = 1; f <= amountOfPeople; f++){
+                for (int f = 1; f <= i; f++){
                     fact = fact.multiply(BigInteger.valueOf(f));
-                    System.out.println(fact);
+                    //System.out.println(fact);
                 }
                 
                 
                 
-                
-//                numerator = BigDecimal.valueOf(((amountOfPeople ^ timeInSeconds) * Math.exp(-(amountOfPeople))));
- //               tempanswer = numerator.toBigInteger().divide(fact);
+                //calculate numerator as BigInteger
+                //numeratorToBeConverted = (long) ((amountOfPeople ^ timeInSeconds) * Math.exp(-(amountOfPeople)));
+                System.out.println(numeratorToBeConverted = Math.exp(5));
+                //numerator = BigDecimal.valueOf(numeratorToBeConverted);
+//                tempanswer = numerator.toBigInteger().divide(fact);
                 
 //                answer =  answer.add(tempanswer);
                 
-//            }
+            }
 //            System.out.println("Factorial Answer: " + fact);
             //need to multiply output by 100
 //            System.out.println("Poisson distribution: "+ (answer.multiply(ConvertTopercentage).toString()));
