@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 class Simulation
@@ -517,7 +519,52 @@ class Simulation
 //                    
         
         }
+
+        //public for testing purposes
+        public void CalculatePoissonDistribution(){
+            int amountOfPeople = 5000;
+            int timeInSeconds = 3 * 60 * 60; // 3hours in seconds 
+            //double answer = 0;
+            int factorial = 1;
+            BigInteger fact = BigInteger.valueOf(factorial);
+            BigDecimal numerator; 
+            BigInteger tempanswer;
+            BigInteger answer = null;
+            
+            int percentage = 100;
+            BigInteger ConvertTopercentage = BigInteger.valueOf(percentage);
+            
+ //           for (int i = 0; i <= amountOfPeople; i++){
+                tempanswer = null;
+                //calculating factorial 
+                //reference http://stackoverflow.com/questions/11446973/find-factorial-of-large-numbers-in-java
+                for (int f = 1; f <= amountOfPeople; f++){
+                    fact = fact.multiply(BigInteger.valueOf(f));
+                    System.out.println(fact);
+                }
                 
+                
+                
+                
+//                numerator = BigDecimal.valueOf(((amountOfPeople ^ timeInSeconds) * Math.exp(-(amountOfPeople))));
+ //               tempanswer = numerator.toBigInteger().divide(fact);
+                
+//                answer =  answer.add(tempanswer);
+                
+//            }
+//            System.out.println("Factorial Answer: " + fact);
+            //need to multiply output by 100
+//            System.out.println("Poisson distribution: "+ (answer.multiply(ConvertTopercentage).toString()));
+            
+            /*poisson Distribution where
+            x = time 
+            l (lamda) = people using the elevator 
+            e = exponitial function
+            
+            formulae is f(x;l) = ((l^x) * (e^-l)) / x! 
+             */
+            
+        }
         public int calcTime(int floorDistInput){
             /*where 
                     t = time

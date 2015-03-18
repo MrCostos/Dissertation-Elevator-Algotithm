@@ -92,7 +92,7 @@ public class GUI extends JFrame
                 int peopleTraffic = 1;
                 		
 		Simulation simulation = new Simulation(Integer.parseInt(NumberOfFloorsTextField.getText()),Integer.parseInt(NumberOfElevatorsTextField.getText()),time, Integer.parseInt(AmountOfPeopleField.getText()), peopleTraffic, Integer.parseInt(distanceField.getText()));
-                
+                                                
                 //using to test poisson distribution
                 //simulation.peopleToUseElevator();
                 
@@ -104,7 +104,8 @@ public class GUI extends JFrame
                 //simulation.peopleToUseElevator();
                 //AppendText();
                 StatsTextArea.setText(Statistics.returnText);
-                        
+                
+                simulation.CalculatePoissonDistribution();
             
         }
         
