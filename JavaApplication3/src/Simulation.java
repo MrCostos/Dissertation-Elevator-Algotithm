@@ -522,6 +522,7 @@ class Simulation
 
         //public for testing purposes
         public void CalculatePoissonDistribution(){
+            //max number that can be used is 745 with poisson distribution 
             double amountOfPeople = 745;
             int timeInSeconds = 3 * 60 * 60; // 3hours in seconds 
             //double answer = 0;

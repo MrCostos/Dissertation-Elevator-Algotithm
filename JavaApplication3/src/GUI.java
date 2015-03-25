@@ -105,7 +105,7 @@ public class GUI extends JFrame
                 //AppendText();
                 StatsTextArea.setText(Statistics.returnText);
                 
-                simulation.CalculatePoissonDistribution();
+                //simulation.CalculatePoissonDistribution();
             
         }
         
